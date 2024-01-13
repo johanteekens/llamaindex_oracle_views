@@ -4,7 +4,7 @@ from typing import Any, Dict, Iterable, List, Optional, Tuple
 from sqlalchemy import MetaData, create_engine, insert, inspect, text
 from sqlalchemy.engine import Engine
 from sqlalchemy.exc import OperationalError, ProgrammingError
-
+import re
 
 class SQLDatabase:
     """SQL Database.
@@ -189,6 +189,7 @@ class SQLDatabase:
         If the statement returns rows, a string of the results is returned.
         If the statement returns no rows, an empty string is returned.
         """
+        command = re.sub(r'\bLIMIT\s+(\d+)\b', r'fetch first \1 row only', command)
         with self._engine.begin() as connection:
             try:
                 cursor = connection.execute(text(command))
