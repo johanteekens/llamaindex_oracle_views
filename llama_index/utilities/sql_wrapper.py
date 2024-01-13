@@ -193,7 +193,7 @@ class SQLDatabase:
         """
         command = re.sub(r'\bLIMIT\s+(\d+)\b', r'fetch first \1 row only', command)
         command = command + ";"
-        print("sql query:" + command)
+        print("sql query 1:" + command)
         with self._engine.begin() as connection:
             try:
                 cursor = connection.execute(text(command))
@@ -203,5 +203,6 @@ class SQLDatabase:
                 ) from exc
             if cursor.returns_rows:
                 result = cursor.fetchall()
+                print("sql result 1:" + result)
                 return str(result), {"result": result, "col_keys": list(cursor.keys())}
         return "", {}
