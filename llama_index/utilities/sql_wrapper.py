@@ -5,6 +5,8 @@ from sqlalchemy import MetaData, create_engine, insert, inspect, text
 from sqlalchemy.engine import Engine
 from sqlalchemy.exc import OperationalError, ProgrammingError
 import re
+import logging
+
 
 class SQLDatabase:
     """SQL Database.
