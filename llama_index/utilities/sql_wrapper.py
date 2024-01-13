@@ -190,6 +190,7 @@ class SQLDatabase:
         If the statement returns no rows, an empty string is returned.
         """
         command = re.sub(r'\bLIMIT\s+(\d+)\b', r'fetch first \1 row only', command)
+        log ("sending sql:" + command)
         with self._engine.begin() as connection:
             try:
                 cursor = connection.execute(text(command))
