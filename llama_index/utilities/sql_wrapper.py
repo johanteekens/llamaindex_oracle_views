@@ -203,6 +203,6 @@ class SQLDatabase:
                 ) from exc
             if cursor.returns_rows:
                 result = cursor.fetchall()
-                print("sql result 1:" + result)
+                print ({"result": result, "col_keys": list(cursor.keys())})
                 return str(result), {"result": result, "col_keys": list(cursor.keys())}
         return "", {}
