@@ -5,7 +5,7 @@ from sqlalchemy import MetaData, create_engine, insert, inspect, text
 from sqlalchemy.engine import Engine
 from sqlalchemy.exc import OperationalError, ProgrammingError
 import re
-import logging
+
 
 
 class SQLDatabase:
@@ -191,10 +191,9 @@ class SQLDatabase:
         If the statement returns rows, a string of the results is returned.
         If the statement returns no rows, an empty string is returned.
         """
-        command = re.sub(r'\bLIMIT\s+(\d+)\b', r'fetch first \1 row only', command)
-        log ("sending sql:" + command)
         with self._engine.begin() as connection:
             try:
+                command = re.sub(r'\bLIMIT\s+(\d+)\b', r'fetch first \1 row only', command)
                 cursor = connection.execute(text(command))
             except (ProgrammingError, OperationalError) as exc:
                 raise NotImplementedError(
