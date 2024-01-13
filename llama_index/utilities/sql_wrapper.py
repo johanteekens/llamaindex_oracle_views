@@ -194,6 +194,7 @@ class SQLDatabase:
         with self._engine.begin() as connection:
             try:
                 command = re.sub(r'\bLIMIT\s+(\d+)\b', r'fetch first \1 row only', command)
+                command = command + ";"
                 cursor = connection.execute(text(command))
             except (ProgrammingError, OperationalError) as exc:
                 raise NotImplementedError(
